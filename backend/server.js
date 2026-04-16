@@ -7,6 +7,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/about", require("./routes/aboutRoutes"));
+app.use("/api/projects", require("./routes/projectRoutes"));
 
 const connectDB = require("./config/db");
 connectDB();
