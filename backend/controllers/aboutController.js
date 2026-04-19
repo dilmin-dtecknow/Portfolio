@@ -121,3 +121,32 @@ exports.updateSkill = async (req, res) => {
     res.status(400).json({ message: "Failed to update skill", error: error.message });
   }
 };
+
+// REMOVE one skill from About Data
+exports.removeSkill = async (req, res) => {
+  try {
+    const { id, skillIndex } = req.params;
+    const parsedIndex = Number(skillIndex);
+
+    if (!Number.isInteger(parsedIndex) || parsedIndex < 0) {
+      return res.status(400).json({ message: "A valid skill index is required" });
+    }
+
+    const about = await About.findById(id);
+
+    if (!about) {
+      return res.status(404).json({ message: "About record not found" });
+    }
+
+    if (parsedIndex >= about.skills.length) {
+      return res.status(404).json({ message: "Skill not found at the provided index" });
+    }
+
+    about.skills.splice(parsedIndex, 1);
+    await about.save();
+
+    res.json(about);
+  } catch (error) {
+    res.status(400).json({ message: "Failed to remove skill", error: error.message });
+  }
+};
