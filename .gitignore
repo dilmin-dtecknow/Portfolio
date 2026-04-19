@@ -11,6 +11,7 @@ backend/.env.*
 frontend/.env
 frontend/.env.*
 !frontend/.env.example
+backend/details.txt
 
 dist/
 build/

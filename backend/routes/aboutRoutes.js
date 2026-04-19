@@ -9,11 +9,13 @@ const {
   getAboutById,
 } = require("../controllers/aboutController");
 
+const auth = require("../middleware/auth");
+
 router.get("/", getAbout);
 router.get("/:id", getAboutById);
-router.post("/", createAbout);
-router.put("/:id", updateAbout);
-router.post("/:id/skills", addSkill);
-router.put("/:id/skills/:skillIndex", updateSkill);
+router.post("/",auth, createAbout);
+router.put("/:id",auth, updateAbout);
+router.post("/:id/skills",auth, addSkill);
+router.put("/:id/skills/:skillIndex",auth, updateSkill);
 
 module.exports = router;
