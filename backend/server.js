@@ -8,6 +8,7 @@ app.use(cors());
 
 app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/projects", require("./routes/projectRoutes"));
+app.use("/api/auth", require("./routes/authRoutes"));
 
 const connectDB = require("./config/db");
 connectDB();

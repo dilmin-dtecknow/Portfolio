@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const mongoose = require("mongoose");
 const cloudinary = require("../config/cloudinary");
 
 const slugifyProjectTitle = (title = "") =>
@@ -102,5 +103,27 @@ exports.getProjects = async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).json({ msg: "Error fetching projects" });
+    }
+};
+
+// GET single project by id
+exports.getProjectById = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ msg: "Invalid project id" });
+        }
+
+        const project = await Project.findById(id);
+
+        if (!project) {
+            return res.status(404).json({ msg: "Project not found" });
+        }
+
+        res.json(project);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ msg: "Error fetching project" });
     }
 };
