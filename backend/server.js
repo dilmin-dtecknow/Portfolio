@@ -9,6 +9,8 @@ app.use(cors());
 app.use("/api/about", require("./routes/aboutRoutes"));
 app.use("/api/projects", require("./routes/projectRoutes"));
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/experiences", require("./routes/experienceRoutes"));
+app.use("/api/education", require("./routes/educationRoutes"));
 
 const connectDB = require("./config/db");
 connectDB();
