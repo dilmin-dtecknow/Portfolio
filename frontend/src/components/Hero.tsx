@@ -1,8 +1,10 @@
-import { useRef, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { motion } from 'framer-motion';
-import * as THREE from 'three';
-import './Hero.css';
+import { useRef, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { motion } from "framer-motion";
+import * as THREE from "three";
+import Roboanime from "./animation/Roboanime";
+import "./Hero.css";
+import NinjaKnife from "./animation/NinjaKnife";
 
 function RotatingCode() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -69,6 +71,10 @@ export default function Hero() {
         initial="hidden"
         animate="visible"
       >
+        {/* <div className="ninja-code">
+          <NinjaKnife />
+        </div> */}
+
         <div className="hero-content">
           <motion.h1 className="hero-title" variants={itemVariants}>
             <span className="gradient-text">Full Stack Developer</span>
@@ -86,7 +92,9 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() =>
-                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+                document
+                  .getElementById("projects")
+                  ?.scrollIntoView({ behavior: "smooth" })
               }
             >
               View My Work
@@ -96,7 +104,9 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() =>
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                document
+                  .getElementById("contact")
+                  ?.scrollIntoView({ behavior: "smooth" })
               }
             >
               Get In Touch
@@ -122,6 +132,9 @@ export default function Hero() {
         <div className="hero-3d">
           <div className="hero-3d-box">
             <CodingScene />
+          </div>
+          <div className="hero-lottie">
+            <Roboanime />
           </div>
         </div>
       </motion.div>

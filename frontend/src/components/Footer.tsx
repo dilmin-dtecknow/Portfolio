@@ -15,7 +15,7 @@ export default function Footer() {
         viewport={{ once: true }}
       >
         <p>
-          Made with <Heart size={16} className="heart-icon" /> by Your Name
+          Made with <Heart size={16} className="heart-icon" /> by Dilmin Fernando
         </p>
         <p>© {currentYear} All rights reserved.</p>
       </motion.div>

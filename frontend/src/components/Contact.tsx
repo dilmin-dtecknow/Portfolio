@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Mail, Phone, MapPin } from 'lucide-react';
-import './Contact.css';
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Mail, Phone, MapPin} from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import "./Contact.css";
+import HelloRoboanim from "./animation/HelloRoboanim";
+import emailjs from "@emailjs/browser";
 
 export default function Contact() {
   const { ref, inView } = useInView({
@@ -10,10 +13,13 @@ export default function Contact() {
     triggerOnce: true,
   });
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    mobile: "",
+    message: "",
   });
 
   const containerVariants = {
@@ -35,7 +41,9 @@ export default function Contact() {
     },
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -44,36 +52,73 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setLoading(true);
+    console.log("Form submitted:", formData);
     // Add your form submission logic here
-    setFormData({ name: '', email: '', message: '' });
-  };
+    setFormData({ name: "", email: "", mobile: "", message: "" });
+
+    emailjs
+      .send(
+        "service_bvaisf5", //service ID
+        "template_bn62tab", //template ID
+        {
+          from_name: formData.name,
+          to_name: "Dilmin",
+          from_email: formData.email,
+          from_phone: formData.mobile,
+          to_email: "fpasifernando@gmail.com",
+          message: formData.message,
+          time: new Date().toLocaleString(),
+        },
+        "3Gc2EPyCLKk1iKXvs", //public key
+      )
+      .then(
+        () => {
+          setLoading(false);
+          // showToast('Thank you. I will get back to you as soon as possible.', 'success');
+
+          setFormData({
+            name: "",
+            email: "",
+            mobile: "",
+            message: "",
+          });
+        },
+        (error) => {
+          setLoading(false);
+          console.error(error);
+          // showToast('Something went wrong. Please try again later.', 'error');
+        }
+      );
+  }
 
   const contactMethods = [
     {
       icon: Mail,
-      title: 'Email',
-      value: 'hello@example.com',
-      link: 'mailto:hello@example.com',
+      title: "Email",
+      value: "hello@example.com",
+      link: "mailto:hello@example.com",
     },
     {
       icon: Phone,
-      title: 'Phone',
-      value: '+1 (555) 123-4567',
-      link: 'tel:+15551234567',
+      title: "Phone",
+      value: "+1 (555) 123-4567",
+      link: "tel:+15551234567",
     },
     {
       icon: MapPin,
-      title: 'Location',
-      value: 'San Francisco, CA',
-      link: '#',
+      title: "Location",
+      value: "San Francisco, CA",
+      link: "#",
     },
   ];
 
   const socials = [
-    { icon: Mail, link: '#', label: 'Email' },
-    { icon: Phone, link: '#', label: 'Phone' },
-    { icon: MapPin, link: '#', label: 'Location' },
+    { icon: Mail, link: "#", label: "Email" },
+    { icon: Phone, link: "#", label: "Phone" },
+    { icon: MapPin, link: "#", label: "Location" },
+    { icon: FaGithub, link: "#", label: "Github" },
+    {icon: FaLinkedin, link: "#", label: "LinkedIn"},
   ];
 
   return (
@@ -82,7 +127,7 @@ export default function Contact() {
         className="contact-container"
         variants={containerVariants}
         initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
+        animate={inView ? "visible" : "hidden"}
       >
         <motion.div className="contact-header" variants={itemVariants}>
           <h2 className="section-title">
@@ -148,6 +193,18 @@ export default function Contact() {
                 required
               />
             </div>
+            <div className="form-group">
+              <label htmlFor="mobile">Your Mobile</label>
+              <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                placeholder="+1 (555) 123-4567"
+                required
+              />
+            </div>
 
             <div className="form-group">
               <label htmlFor="message">Message</label>
@@ -167,6 +224,7 @@ export default function Contact() {
               className="btn btn-primary form-submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              disabled={loading}
             >
               Send Message
             </motion.button>
@@ -175,6 +233,7 @@ export default function Contact() {
 
         <motion.div className="social-links" variants={itemVariants}>
           <p>Follow me on social media</p>
+          <HelloRoboanim />
           <div className="socials">
             {socials.map((social, index) => {
               const IconComponent = social.icon;
