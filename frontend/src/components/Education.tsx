@@ -102,7 +102,7 @@ export default function Education() {
                   className="timeline-content card"
                   whileHover={{ scale: 1.02, translateX: 10 }}
                 >
-                  <div className="timeline-year">{item.startDate ? new Date(item.startDate).getFullYear() : "Completed"} - {new Date(item.endDate).getFullYear()}</div>
+                  <div className="timeline-year">{item.startDate ? new Date(item.startDate).getFullYear() : "Completed"} - {item.endDate ? new Date(item.endDate).getFullYear():"Present"}</div>
                   <h3>{item.name}</h3>
                   <p className="timeline-institution">{item.school}</p>
                   <p className="timeline-description">{item.details}</p>

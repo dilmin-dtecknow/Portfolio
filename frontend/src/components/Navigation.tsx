@@ -52,7 +52,7 @@ export default function Navigation() {
         >
           <div className="logo-text">
             <span className="logo-bracket">&lt;</span>
-            <span className="logo-name">Portfolio</span>
+            <span className="logo-name">Dilmin Fernando</span>
             <span className="logo-bracket">/&gt;</span>
           </div>
         </motion.div>
