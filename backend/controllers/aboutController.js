@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 // GET About Data
 exports.getAbout = async (req, res) => {
   try {
-    const data = await About.find();
+    const data = await About.findOne();
     res.json(data);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch about data", error: error.message });
