@@ -16,3 +16,15 @@ export interface Education {
     startDate: string;
     endDate: string;
 }
+
+export interface Projects {
+    title: string;
+    description: string;
+    techStack: string[];
+    githubLink: string;
+    liveLink: string;
+    images: string[];
+    createdAt: {
+        type: Date;
+    }
+}

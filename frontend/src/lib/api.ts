@@ -1,4 +1,4 @@
-import type { About, Education } from "../types";
+import type { About, Education, Projects } from "../types";
 
 //public route
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"
@@ -15,4 +15,10 @@ export async function getEducation(): Promise<Education[]> {
     const res = await fetch(`${API_URL}/api/education`);
     if (!res.ok) throw new Error("Failed to Load Education!");
     return res.json() as Promise<Education[]>;
+}
+
+export async function getProjects(): Promise<Projects[]> {
+    const res = await fetch(`${API_URL}/api/projects`);
+    if (!res.ok) throw new Error("Faild to load Projects");
+    return res.json() as Promise<Projects[]>;
 }
