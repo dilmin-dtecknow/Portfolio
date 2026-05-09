@@ -7,3 +7,12 @@ export interface About {
         skills: string[];
     }[];
 }
+
+export interface Education {
+    name: string;
+    school: string;
+    logo: string;
+    details: string;
+    startDate: string;
+    endDate: string;
+}

@@ -1,9 +1,15 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { BookOpen, Award } from 'lucide-react';
+import * as Icons from "lucide-react";
 import './Education.css';
+import { getEducation } from '../lib/api';
+import { useEffect, useState } from 'react';
+import type { Education } from '../types';
 
 export default function Education() {
+
+  const [education,setEducation] = useState<Education[]>([]);
+
   const { ref, inView } = useInView({
     threshold: 0.3,
     triggerOnce: true,
@@ -28,29 +34,36 @@ export default function Education() {
     },
   };
 
-  const education = [
-    {
-      icon: BookOpen,
-      title: 'Bachelor of Science in Computer Science',
-      institution: 'University of Technology',
-      year: '2020 - 2024',
-      description: 'Specialized in Web Development and Software Engineering',
-    },
-    {
-      icon: Award,
-      title: 'Advanced React Development',
-      institution: 'Online Learning Platform',
-      year: '2023',
-      description: 'Mastered advanced React patterns and performance optimization',
-    },
-    {
-      icon: Award,
-      title: 'Full Stack Web Development Bootcamp',
-      institution: 'Code Academy',
-      year: '2022',
-      description: 'Intensive bootcamp covering MERN stack and modern web technologies',
-    },
-  ];
+  useEffect(() => {
+    getEducation()
+      .then((data) => {
+        setEducation(data);
+      });
+  }, []);
+
+  // const education = [
+  //   {
+  //     icon: BookOpen,
+  //     title: 'Bachelor of Science in Computer Science',
+  //     institution: 'University of Technology',
+  //     year: '2020 - 2024',
+  //     description: 'Specialized in Web Development and Software Engineering',
+  //   },
+  //   {
+  //     icon: Award,
+  //     title: 'Advanced React Development',
+  //     institution: 'Online Learning Platform',
+  //     year: '2023',
+  //     description: 'Mastered advanced React patterns and performance optimization',
+  //   },
+  //   {
+  //     icon: GraduationCap,
+  //     title: 'Full Stack Web Development Bootcamp',
+  //     institution: 'Code Academy',
+  //     year: '2022',
+  //     description: 'Intensive bootcamp covering MERN stack and modern web technologies',
+  //   },
+  // ];
 
   return (
     <section className="education" id="education" ref={ref}>
@@ -72,7 +85,7 @@ export default function Education() {
 
         <div className="timeline">
           {education.map((item, index) => {
-            const IconComponent = item.icon;
+            const IconComponent = Icons[item.logo as keyof typeof Icons] || Icons.BookOpen;
             return (
               <motion.div
                 key={index}
@@ -81,7 +94,7 @@ export default function Education() {
               >
                 <div className="timeline-marker">
                   <div className="timeline-icon">
-                    <IconComponent size={24} />
+                    {IconComponent ? <IconComponent size={24} /> : null}
                   </div>
                   {index < education.length - 1 && <div className="timeline-line" />}
                 </div>
@@ -89,10 +102,10 @@ export default function Education() {
                   className="timeline-content card"
                   whileHover={{ scale: 1.02, translateX: 10 }}
                 >
-                  <div className="timeline-year">{item.year}</div>
-                  <h3>{item.title}</h3>
-                  <p className="timeline-institution">{item.institution}</p>
-                  <p className="timeline-description">{item.description}</p>
+                  <div className="timeline-year">{item.startDate ? new Date(item.startDate).getFullYear() : "Completed"} - {new Date(item.endDate).getFullYear()}</div>
+                  <h3>{item.name}</h3>
+                  <p className="timeline-institution">{item.school}</p>
+                  <p className="timeline-description">{item.details}</p>
                 </motion.div>
               </motion.div>
             );
