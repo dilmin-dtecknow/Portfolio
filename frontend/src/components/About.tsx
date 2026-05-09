@@ -1,7 +1,10 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Code, Zap, Users } from 'lucide-react';
-import './About.css';
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { Code, Zap, Users } from "lucide-react";
+import "./About.css";
+import { useEffect, useState } from "react";
+import { getAbout } from "../lib/api";
+import type { About } from "../types";
 
 export default function About() {
   const { ref, inView } = useInView({
@@ -31,23 +34,36 @@ export default function About() {
   const features = [
     {
       icon: Code,
-      title: 'Clean Code',
+      title: "Clean Code",
       description:
-        'Writing maintainable, well-structured code following best practices and design patterns',
+        "Writing maintainable, well-structured code following best practices and design patterns",
     },
     {
       icon: Zap,
-      title: 'Performance',
+      title: "Performance",
       description:
-        'Building fast, optimized applications that deliver excellent user experience',
+        "Building fast, optimized applications that deliver excellent user experience",
     },
     {
       icon: Users,
-      title: 'Collaboration',
+      title: "Collaboration",
       description:
-        'Working effectively in teams to deliver projects on time and exceed expectations',
+        "Working effectively in teams to deliver projects on time and exceed expectations",
     },
   ];
+
+  const [about, setAbout] = useState<About>();
+  // const [loading,setLoading] = useState();
+
+  useEffect(() => {
+    getAbout()
+      .then((data) => {
+        console.log("API response:",data); // 👈 check here
+        setAbout(data);
+      })
+      .catch(console.error);
+    // .finally(() => setLoading(false));
+  }, []);
 
   return (
     <section className="about" id="about" ref={ref}>
@@ -55,7 +71,7 @@ export default function About() {
         className="about-container"
         variants={containerVariants}
         initial="hidden"
-        animate={inView ? 'visible' : 'hidden'}
+        animate={inView ? "visible" : "hidden"}
       >
         <motion.div className="about-header" variants={itemVariants}>
           <h2 className="section-title">
@@ -70,15 +86,17 @@ export default function About() {
         <div className="about-content">
           <motion.div className="about-text" variants={itemVariants}>
             <p>
-              I'm a full-stack developer with 3+ years of experience building web applications.
+              {/* I'm a full-stack developer with 3+ years of experience building web applications.
               I love turning complex problems into simple, beautiful, and intuitive designs. My
               passion lies in creating performant and user-friendly applications using modern
-              technologies.
+              technologies. */}
+              {about ? about.bio : "Loading..."}
             </p>
             <p>
-              When I'm not coding, you can find me exploring new technologies, contributing to
-              open-source projects, or sharing knowledge with the community. I believe in continuous
-              learning and pushing the boundaries of what's possible on the web.
+              When I'm not coding, you can find me exploring new technologies,
+              contributing to open-source projects, or sharing knowledge with
+              the community. I believe in continuous learning and pushing the
+              boundaries of what's possible on the web.
             </p>
           </motion.div>
 
@@ -86,7 +104,11 @@ export default function About() {
             {features.map((feature, index) => {
               const IconComponent = feature.icon;
               return (
-                <motion.div key={index} className="feature-card card" variants={itemVariants}>
+                <motion.div
+                  key={index}
+                  className="feature-card card"
+                  variants={itemVariants}
+                >
                   <div className="feature-icon">
                     <IconComponent size={32} />
                   </div>
