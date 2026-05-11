@@ -34,6 +34,10 @@ const experienceSchema = new mongoose.Schema(
             trim: true,
             default: "",
         },
+        achievements:{
+            type:[String],
+            default:""
+        },
     },
     {
         timestamps: true,

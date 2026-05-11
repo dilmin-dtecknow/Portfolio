@@ -28,3 +28,14 @@ export interface Projects {
         type: Date;
     }
 }
+
+export interface Experience {
+    title: string;
+    companyName: string;
+    logo: string;
+    startDate: string;
+    endDate: string;
+    isCurrent: boolean;
+    details: string;
+    achievements:string[];
+}
