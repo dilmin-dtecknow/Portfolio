@@ -37,5 +37,12 @@ export interface Experience {
     endDate: string;
     isCurrent: boolean;
     details: string;
-    achievements:string[];
+    achievements: string[];
+}
+
+export interface Testermonials {
+    name: string;
+    role: string;
+    feedback: string;
+    rating: number;
 }

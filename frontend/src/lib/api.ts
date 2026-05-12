@@ -1,4 +1,4 @@
-import type { About, Education, Experience, Projects } from "../types";
+import type { About, Education, Experience, Projects, Testermonials } from "../types";
 
 //public route
 const API_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000"
@@ -29,4 +29,13 @@ export async function getExperience(): Promise<Experience[]> {
     const res = await fetch(`${API_URL}/api/experiences`)
     if (!res.ok) throw Error("faild to get Experience!")
     return res.json() as Promise<Experience[]>
+}
+
+//Testermonials
+export async function getTestermonials(): Promise<Testermonials[]> {
+
+    const res = await fetch(`${API_URL}/api/testermonials`);
+    if (!res.ok) throw Error("Faild to get Testermonials!");
+    return res.json() as Promise<Testermonials[]>
+
 }
