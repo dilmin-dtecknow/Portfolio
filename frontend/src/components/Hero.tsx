@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import * as THREE from "three";
 import Roboanime from "./animation/Roboanime";
 import "./Hero.css";
-import NinjaKnife from "./animation/NinjaKnife";
 
 function RotatingCode() {
   const meshRef = useRef<THREE.Mesh>(null);

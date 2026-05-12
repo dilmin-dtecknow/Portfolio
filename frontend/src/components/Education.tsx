@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import * as Icons from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
 import './Education.css';
 import { getEducation } from '../lib/api';
 import { useEffect, useState } from 'react';
@@ -85,7 +86,8 @@ export default function Education() {
 
         <div className="timeline">
           {education.map((item, index) => {
-            const IconComponent = Icons[item.logo as keyof typeof Icons] || Icons.BookOpen;
+            const IconComponent = Icons[item.logo as keyof typeof Icons] as LucideIcon | undefined;
+            const ResolvedIcon = IconComponent ?? Icons.BookOpen;
             return (
               <motion.div
                 key={index}
@@ -94,7 +96,7 @@ export default function Education() {
               >
                 <div className="timeline-marker">
                   <div className="timeline-icon">
-                    {IconComponent ? <IconComponent size={24} /> : null}
+                    <ResolvedIcon size={24} />
                   </div>
                   {index < education.length - 1 && <div className="timeline-line" />}
                 </div>
