@@ -1,9 +1,11 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 import Roboanime from "./animation/Roboanime";
 import "./Hero.css";
+import { getProjects } from "../lib/api";
+import type { Projects } from "../types";
 
 function RotatingCode() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -62,6 +64,14 @@ export default function Hero() {
     },
   };
 
+  const [project, setProjects] = useState<Projects[]>([]);
+
+  useEffect(() => {
+    getProjects().then((data) => {
+      setProjects(data);
+    });
+  }, []);
+
   return (
     <section className="hero" id="home">
       <motion.div
@@ -114,15 +124,16 @@ export default function Hero() {
 
           <motion.div className="hero-stats" variants={itemVariants}>
             <div className="stat">
-              <h3>10+</h3>
+              <h3>{project.length}+</h3>
               <p>Projects Completed</p>
             </div>
             <div className="stat">
-              <h3>3+</h3>
+              <h3>{new Date().getFullYear() - 2023}+</h3>
               <p>Years Experience</p>
             </div>
+
             <div className="stat">
-              <h3>20+</h3>
+              <h3>1+</h3>
               <p>Happy Clients</p>
             </div>
           </motion.div>
