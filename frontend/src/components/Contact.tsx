@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Mail, Phone, MapPin} from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import "./Contact.css";
 import HelloRoboanim from "./animation/HelloRoboanim";
 import emailjs from "@emailjs/browser";
+import { FaWhatsapp } from "react-icons/fa6";
 
 export default function Contact() {
   const { ref, inView } = useInView({
@@ -50,12 +51,28 @@ export default function Contact() {
     });
   };
 
+  const isFormEmpty =
+    !formData.name.trim() ||
+    !formData.email.trim() ||
+    !formData.mobile.trim() ||
+    !formData.message.trim();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     console.log("Form submitted:", formData);
     // Add your form submission logic here
     setFormData({ name: "", email: "", mobile: "", message: "" });
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.mobile ||
+      !formData.message
+    ) {
+      setLoading(false);
+      return;
+    }
 
     emailjs
       .send(
@@ -88,37 +105,46 @@ export default function Contact() {
           setLoading(false);
           console.error(error);
           // showToast('Something went wrong. Please try again later.', 'error');
-        }
+        },
       );
-  }
+  };
 
   const contactMethods = [
     {
       icon: Mail,
       title: "Email",
-      value: "hello@example.com",
-      link: "mailto:hello@example.com",
+      value: "dtharusha0322@gmail.com",
+      link: "mailto:dtharusha0322@gmail.com",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+1 (555) 123-4567",
-      link: "tel:+15551234567",
+      value: "+94 72 032 5099",
+      link: "tel:+94720325099",
     },
     {
       icon: MapPin,
       title: "Location",
-      value: "San Francisco, CA",
+      value: "Negombo, Sri Lanka",
       link: "#",
     },
   ];
 
   const socials = [
-    { icon: Mail, link: "#", label: "Email" },
-    { icon: Phone, link: "#", label: "Phone" },
+    { icon: Mail, link: "mailto:dtharusha0322@gmail.com", label: "Email" },
+    { icon: Phone, link: "tel:+94720325099", label: "Phone" },
     { icon: MapPin, link: "#", label: "Location" },
-    { icon: FaGithub, link: "#", label: "Github" },
-    {icon: FaLinkedin, link: "#", label: "LinkedIn"},
+    {
+      icon: FaGithub,
+      link: "https://github.com/dilmin-dtecknow",
+      label: "Github",
+    },
+    {
+      icon: FaLinkedin,
+      link: "https://www.linkedin.com/in/dilmin-fernando/",
+      label: "LinkedIn",
+    },
+    { icon: FaWhatsapp, link: "https://wa.me/94720325099", label: "WhatsApp" },
   ];
 
   return (
@@ -224,7 +250,7 @@ export default function Contact() {
               className="btn btn-primary form-submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              disabled={loading}
+              disabled={loading || isFormEmpty}
             >
               Send Message
             </motion.button>
