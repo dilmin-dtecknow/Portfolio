@@ -110,6 +110,17 @@ export default function Hero() {
             >
               Get In Touch
             </motion.button>
+            <motion.a
+              className="btn btn-cv"
+              href="/cv/dilmin_fernando_cv.pdf"
+              download
+              whileHover={{ y: -4, scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Download CV
+            </motion.a>
           </motion.div>
 
           <motion.div className="hero-stats" variants={itemVariants}>

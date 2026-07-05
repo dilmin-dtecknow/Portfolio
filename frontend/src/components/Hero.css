@@ -56,12 +56,73 @@
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #00d4ff, #a855f7);
   color: #0a0e27;
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.btn-cv {
+  background: linear-gradient(135deg, #6d28d9, #0ea5e9);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 24px 55px rgba(14, 165, 233, 0.18);
+  z-index: 1;
+  transform-style: preserve-3d;
+}
+
+.btn-cv::before,
+.btn-cv::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.btn-cv::before {
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.35), transparent 28%);
+  opacity: 0.55;
+  filter: blur(12px);
+  transform: translate(-30%, -30%) scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.btn-cv::after {
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 16px;
+  background: linear-gradient(120deg, rgba(0, 212, 255, 0.35), rgba(168, 85, 247, 0.3), rgba(0, 212, 255, 0.15));
+  opacity: 0.85;
+  filter: blur(18px);
+  animation: float-ring 3s linear infinite;
+}
+
+.btn-cv:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 70px rgba(14, 165, 233, 0.3);
+}
+
+.btn-cv:hover::before {
+  transform: translate(-20%, -20%) scale(1);
+}
+
+@keyframes float-ring {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(2px, -4px) rotate(180deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
 }
 
 .btn-primary:hover {
