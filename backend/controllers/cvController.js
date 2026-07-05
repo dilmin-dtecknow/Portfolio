@@ -40,7 +40,7 @@ exports.downloadCV = (req, res) => {
 
         return res.download(
             cvPath,
-            "Dilmin_Fernando_CV"
+            "Dilmin_Fernando_CV.pdf"
         );
 
     } catch (error) {
