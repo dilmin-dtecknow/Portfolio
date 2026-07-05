@@ -6,6 +6,13 @@ const cvPath = path.join(__dirname, "../public/cv/dilmin_fernando_cv.pdf");
 exports.uploadCV = (req, res) => {
     try {
 
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please upload a PDF file."
+            });
+        }
+
         return res.status(200).json({
             success: true,
             message: "CV upload successfuly ✅"
@@ -31,7 +38,10 @@ exports.downloadCV = (req, res) => {
             });
         }
 
-        return res.download(cvPath, "Dilmin_Fernando_CV");
+        return res.download(
+            cvPath,
+            "Dilmin_Fernando_CV"
+        );
 
     } catch (error) {
 
@@ -53,13 +63,13 @@ exports.getCVInfo = (req, res) => {
             });
         }
 
-        const status = fs.statSync(cvPath); // Get file meta data
+        const stats = fs.statSync(cvPath); // Get file meta data
 
         res.status(200).json({
             success: true,
             fileName: "dilmin_fernando_cv.pdf",
-            size: status.size,
-            lastUpdated: status.mtime
+            size: stats.size,
+            lastUpdated: stats.mtime
         });
 
     } catch (error) {
