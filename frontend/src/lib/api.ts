@@ -39,3 +39,19 @@ export async function getTestermonials(): Promise<Testermonials[]> {
     return res.json() as Promise<Testermonials[]>
 
 }
+
+//cv info
+export async function getCVInfo() {
+    const res = await fetch(`${API_URL}/api/cv`);
+
+    if (!res.ok) {
+        throw new Error("Faild to load cv info");
+    }
+
+    return res.json();
+}
+
+
+//download cv
+export const CV_DOWNLOAD_URL =
+    `${API_URL}/api/cv/download`;

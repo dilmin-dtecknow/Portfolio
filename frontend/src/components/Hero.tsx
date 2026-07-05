@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import * as THREE from "three";
 import Roboanime from "./animation/Roboanime";
 import "./Hero.css";
+import { CV_DOWNLOAD_URL } from "../lib/api";
 
 function RotatingCode() {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -112,7 +113,7 @@ export default function Hero() {
             </motion.button>
             <motion.a
               className="btn btn-cv"
-              href="/cv/dilmin_fernando_cv.pdf"
+              href={CV_DOWNLOAD_URL}
               download
               whileHover={{ y: -4, scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
